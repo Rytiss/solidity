@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE(function_external_types)
 			uint a;
 		}
 		contract Test {
-			function boo(uint, bool, bytes8, bool[2], uint[], C, address[]) external returns (uint ret) {
+			function boo(uint, bool, bytes8, bool[2] calldata, uint[] calldata, C, address[] calldata) external returns (uint ret) {
 				ret = 5;
 			}
 		}
@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE(external_structs)
 			struct X { bytes32 x; Test t; Simple[] s; }
 			function f(ActionChoices, uint, Simple calldata) external {}
 			function g(Test, Nested calldata) external {}
-			function h(function(Nested memory) external returns (uint)[]) external {}
+			function h(function(Nested memory) external returns (uint)[] calldata) external {}
 			function i(Nested[] calldata) external {}
 		}
 	)";
@@ -340,7 +340,7 @@ BOOST_AUTO_TEST_CASE(string)
 	char const* sourceCode = R"(
 		contract C {
 			string s;
-			function f(string x) external { s = x; }
+			function f(string calldata x) external { s = x; }
 		}
 	)";
 	BOOST_CHECK_NO_THROW(parseAndAnalyse(sourceCode));
